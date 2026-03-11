@@ -206,36 +206,15 @@ tr:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 5px;
   transition: all var(--transition);
-  font-size: 0;
-}
-
-.actions a:first-child::before {
-  content: '';
-  display: block;
-  width: 15px;
-  height: 15px;
-  background-color: #ffffff;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-}
-
-.actions a:last-child::before {
-  content: '';
-  display: block;
-  width: 15px;
-  height: 15px;
-  background-color: #ffffff;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-  mask-size: contain;
 }
 
 .actions a.btn-update {
+  color: #ffffff;
   background: #16a34a;
   border: 1px solid #16a34a;
 }
@@ -248,6 +227,7 @@ tr:hover {
 }
 
 .actions a.btn-delete {
+  color: #ffffff;
   background: var(--danger);
   border: 1px solid var(--danger);
 }
@@ -276,4 +256,3 @@ tr:hover {
     min-width: 100%;
   }
 }
-
