@@ -47,8 +47,8 @@ function getUsers(){
                 <td>${element.gender}</td>
                 <td>
                 <div class="actions"> 
-                    <a href="javascript:void(0)" onClick="updateMember(${element.id})">Update</a> 
-                    <a href="javascript:void(0)" onClick="deleteMember(${element.id})">Delete</a>
+                    <a href="javascript:void(0)" onClick="updateMember(${element.id})">✏️</a> 
+                    <a href="javascript:void(0)" onClick="deleteMember(${element.id})">🗑️</a>
                 </div>
                 </td>
             </tr>
@@ -124,6 +124,7 @@ update.addEventListener('click',()=>{
     location.reload();
 
 })
+
 
 
 
