@@ -117,6 +117,7 @@ select {
   background-repeat: no-repeat;
   background-position: right 0.8rem center;
   cursor: pointer;
+  appearance: none;
 }
 
 /* ─── BUTTONS ────────────────────────────────────────────────── */
@@ -152,6 +153,13 @@ button {
 
 #update:hover {
   background: var(--accent-dim);
+}
+
+/* ─── TABLE WRAPPER ──────────────────────────────────────────── */
+#table-wrapper {
+  flex: 1;
+  overflow-x: auto;
+  min-width: 0;
 }
 
 /* ─── TABLE ─────────────────────────────────────────────────── */
@@ -193,7 +201,6 @@ tr:hover {
   gap: 0.5rem;
 }
 
-/* action links */
 .actions a {
   text-decoration: none;
   font-size: 12px;
@@ -203,36 +210,38 @@ tr:hover {
   transition: background var(--transition);
 }
 
-/* update button */
-.actions a[onClick*="updateMember"] {
+.actions a.btn-update {
   color: var(--accent);
   border: 1px solid var(--accent);
 }
 
-.actions a[onClick*="updateMember"]:hover {
+.actions a.btn-update:hover {
   background: var(--accent-dim);
 }
 
-/* delete button */
-.actions a[onClick*="deleteMember"] {
+.actions a.btn-delete {
   color: var(--danger);
   border: 1px solid var(--danger);
 }
 
-.actions a[onClick*="deleteMember"]:hover {
+.actions a.btn-delete:hover {
   background: var(--danger-dim);
+}
+
+/* ─── LOADING / EMPTY STATE ──────────────────────────────────── */
+.state-row td {
+  text-align: center;
+  color: var(--muted);
+  padding: 2rem;
 }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 @media (max-width: 900px) {
-
   #container {
     flex-direction: column;
     align-items: center;
   }
-
   table {
     min-width: 100%;
   }
-
 }
