@@ -47,7 +47,6 @@ function getUsers() {
                     <td>${e.last_name}</td>
                     <td>${e.email}</td>
                     <td>${e.gender}</td>
-                    <td>${e.ip_address}</td>
                     <td>
                         <div class="actions">
                             <a class="btn-update" href="javascript:void(0)" onclick="updateMember(${e.id})">Update</a>
@@ -125,6 +124,7 @@ update.addEventListener('click',()=>{
     location.reload();
 
 })
+
 
 
 
