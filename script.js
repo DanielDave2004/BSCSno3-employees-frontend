@@ -30,24 +30,32 @@ window.addEventListener('load', ()=>{
 })
 
 function getUsers(){
-    let html=""
-    //FETCH API
+    let html = ""
+
     fetch('https://bscsno3-employees.onrender.com/api/users',{mode:'cors'})
     .then(response=>{
-        console.log(response);
         return response.json();
     })
     .then(data=>{
-        console.log(data);
         data.forEach(element=>{
-            html += `<li> ${element.first_name} ${element.last_name}
-            <div class="actions">
-                <a href="javascript:void(0)" onClick="updateMember(${element.id})">Update</a>
-                <a href="javascript:void(0)" onClick="deleteMember(${element.id})">Delete</a>
-            </div>
-            </li>`;
+            html += `
+            <tr>
+                <td>${element.first_name}</td>
+                <td>${element.last_name}</td>
+                <td>${element.email}</td>
+                <td>${element.gender}</td>
+                <td>${element.ip_address}</td>
+                <td>
+                    <div class="actions">
+                        <a href="javascript:void(0)" onClick="updateMember(${element.id})">Update</a>
+                        <a href="javascript:void(0)" onClick="deleteMember(${element.id})">Delete</a>
+                    </div>
+                </td>
+            </tr>
+            `;
         })
-        content.innerHTML=html;
+
+        document.getElementById("tableBody").innerHTML = html;
     })
     .catch(error=>{
         console.log(error);
@@ -116,3 +124,4 @@ update.addEventListener('click',()=>{
     location.reload();
 
 })
+
