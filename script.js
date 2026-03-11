@@ -1,7 +1,7 @@
-const content=document.querySelector("#content");
+// const content=document.querySelector("#content");
 const submit=document.querySelector("#add");
 const update=document.querySelector("#update");
-
+const content = document.querySelector("#tableBody");
 
 //POST API
 submit.addEventListener('click',()=>{
@@ -123,6 +123,7 @@ update.addEventListener('click',()=>{
     location.reload();
 
 })
+
 
 
 
