@@ -29,38 +29,38 @@ window.addEventListener('load', ()=>{
     getUsers();
 })
 
-function getUsers(){
-    let html = ""
-
-    fetch('https://bscsno3-employees.onrender.com/api/users',{mode:'cors'})
-    .then(response=>{
-        return response.json();
-    })
-    .then(data=>{
-        data.forEach(element=>{
-            html += `
-            <tr>
-                <td>${element.id}</td>
-                <td>${element.first_name}</td>
-                <td>${element.last_name}</td>
-                <td>${element.email}</td>
-                <td>${element.gender}</td>
-                <td>${element.ip_address}</td>
-                <td>
-                    <div class="actions">
-                        <a href="javascript:void(0)" onClick="updateMember(${element.id})">Update</a>
-                        <a href="javascript:void(0)" onClick="deleteMember(${element.id})">Delete</a>
-                    </div>
-                </td>
-            </tr>
-            `;
+function getUsers() {
+    setRow('<tr class="state-row"><td colspan="7">Loading employees…</td></tr>');
+    fetch(API, { mode: 'cors' })
+        .then(r => r.json())
+        .then(data => {
+            if (!data.length) {
+                setRow('<tr class="state-row"><td colspan="7">No employees found.</td></tr>');
+                return;
+            }
+            let html = '';
+            data.forEach(e => {
+                html += `
+                <tr>
+                    <td>${e.id}</td>
+                    <td>${e.first_name}</td>
+                    <td>${e.last_name}</td>
+                    <td>${e.email}</td>
+                    <td>${e.gender}</td>
+                    <td>${e.ip_address}</td>
+                    <td>
+                        <div class="actions">
+                            <a class="btn-update" href="javascript:void(0)" onclick="updateMember(${e.id})">Update</a>
+                            <a class="btn-delete" href="javascript:void(0)" onclick="deleteMember(${e.id})">Delete</a>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+            setRow(html);
         })
-
-        document.getElementById("tableBody").innerHTML = html;
-    })
-    .catch(error=>{
-        console.log(error);
-    })
+        .catch(() => {
+            setRow('<tr class="state-row"><td colspan="7">Failed to load data. Check your connection.</td></tr>');
+        });
 }
 
 
@@ -125,5 +125,6 @@ update.addEventListener('click',()=>{
     location.reload();
 
 })
+
 
 
