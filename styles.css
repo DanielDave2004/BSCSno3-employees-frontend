@@ -210,22 +210,26 @@ tr:hover {
   transition: background var(--transition);
 }
 
-.actions a.btn-update {
-  color: var(--accent);
-  border: 1px solid var(--accent);
+.actions a:first-child {
+  color: #ffffff;
+  background: #16a34a;
+  border: 1px solid #16a34a;
 }
 
-.actions a.btn-update:hover {
-  background: var(--accent-dim);
+.actions a:first-child:hover {
+  background: #15803d;
+  border-color: #15803d;
 }
 
-.actions a.btn-delete {
-  color: var(--danger);
+.actions a:last-child {
+  color: #ffffff;
+  background: var(--danger);
   border: 1px solid var(--danger);
 }
 
-.actions a.btn-delete:hover {
-  background: var(--danger-dim);
+.actions a:last-child:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
 }
 
 /* ─── LOADING / EMPTY STATE ──────────────────────────────────── */
