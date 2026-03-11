@@ -40,6 +40,7 @@ function getUsers(){
         data.forEach(element=>{
             html += `
             <tr>
+                <td>${element.id}</td>
                 <td>${element.first_name}</td>
                 <td>${element.last_name}</td>
                 <td>${element.email}</td>
@@ -124,4 +125,5 @@ update.addEventListener('click',()=>{
     location.reload();
 
 })
+
 
