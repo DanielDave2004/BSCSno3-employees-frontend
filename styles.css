@@ -89,6 +89,7 @@ label {
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--muted);
+  margin-bottom: -12px;
 }
 
 input[type="text"],
@@ -100,7 +101,7 @@ select {
   color: var(--text);
   font-family: var(--font);
   font-size: 14px;
-  padding: 0rem 0.8rem;
+  padding: 0.6rem 0.8rem;
   outline: none;
   transition: border-color var(--transition), box-shadow var(--transition);
 }
@@ -256,4 +257,5 @@ tr:hover {
     min-width: 100%;
   }
 }
+
 
