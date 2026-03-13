@@ -11,7 +11,7 @@ submit.addEventListener('click',()=>{
     let ip_add=document.querySelector("#ip_add").value;
     let formData={fname,lname,email,gender,ip_add};
 
-    fetch("http://localhost:1111/api/users",{
+    fetch("https://bscsno3-employees.onrender.com/api/users",{
         method:'POST',
         body: JSON.stringify(formData),
         headers:{
@@ -32,7 +32,7 @@ window.addEventListener('load', ()=>{
 function getUsers(){
     let html="";
 
-    fetch('http://localhost:1111/api/users',{mode:'cors'})
+    fetch('https://bscsno3-employees.onrender.com/api/users',{mode:'cors'})
     .then(response=>{
         return response.json();
     })
@@ -71,7 +71,7 @@ function getUsers(){
 //DELETE
 function deleteMember(id) {
     if (confirm("Are you sure you want to delete this employee?")) {
-        fetch("http://localhost:1111/api/users", {
+        fetch("https://bscsno3-employees.onrender.com/api/users", {
             method: 'DELETE',
             body: JSON.stringify({ id }),
             headers: {
@@ -93,7 +93,7 @@ function deleteMember(id) {
 
 //search
 function updateMember(id){
-    fetch(`http://localhost:1111/api/users/${id}`)
+    fetch(`https://bscsno3-employees.onrender.com/api/users/${id}`)
     .then(response=> response.json())
     .then(data=>{
         document.querySelector("#fname").value=data[0].first_name;
@@ -118,7 +118,7 @@ update.addEventListener('click',()=>{
     let id=document.querySelector("#ID").value;
 
     let formData={fname,lname,email,gender,ip,id};
-    fetch(`http://localhost:1111/api/users/`,{
+    fetch(`https://bscsno3-employees.onrender.com/api/users`,{
         method:'PUT',
         body: JSON.stringify(formData),
         headers:{
@@ -130,3 +130,4 @@ update.addEventListener('click',()=>{
     alert("User Updated Successfully");
     location.reload();
 })
+
