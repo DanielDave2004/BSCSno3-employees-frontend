@@ -1,144 +1,64 @@
-// const content=document.querySelector("#content");
-const submit=document.querySelector("#add");
-const update=document.querySelector("#update");
-const content = document.querySelector("#tableBody");
+//SQL
+const connection = require('../config/db');
 
-//POST API
-submit.addEventListener('click',()=>{
-    let fname=document.querySelector("#fname").value;
-    let lname=document.querySelector("#lname").value;
-    let email=document.querySelector("#email").value;
-    let gender=document.querySelector("#gender").value;
-    let formData={fname,lname,email,gender};
-
-    fetch("https://bscsno3-employees.onrender.com/api/users",{
-        method:'POST',
-        body: JSON.stringify(formData),
-        headers:{
-            "Content-Type":"application/json",
-        },
-    }).catch((error)=>{
-        console.log(error);
-    })
-    alert("User Added Successfully");
-    location.reload();
-});
-
-
-window.addEventListener('load', ()=>{
-    getUsers();
-})
-
-function getUsers(){
-    let html="";
-
-    fetch('https://bscsno3-employees.onrender.com/api/users',{mode:'cors'})
-    .then(response=>{
-        return response.json();
-    })
-    .then(data=>{
-        data.forEach(element=>{
-            html += `
-            <tr>
-                <td>${element.id}</td>
-                <td>${element.first_name}</td>
-                <td>${element.last_name}</td>
-                <td>${element.email}</td>
-                <td>${element.gender}</td>
-                <td>
-                <div class="actions">
-                    <a class="btn-update" href="javascript:void(0)" onClick="updateMember(${element.id})">
-                      <i class="fas fa-edit"></i>
-                    </a>
-                    <a class="btn-delete" href="javascript:void(0)" onClick="deleteMember(${element.id})">
-                      <i class="fas fa-trash"></i>
-                    </a>
-                </div>
-                </td>
-            </tr>
-            `;
-        });
-
-        content.innerHTML = html;
-    })
-    .catch(error=>{
-        console.log(error);
+//Get all users
+exports.getAllUsers=(req,res)=>{
+    connection.query('SELECT * FROM userdata', (err,rows,fields)=>{
+        if(err) throw err;
+            res.json(rows);
     });
-}
+};
 
+//Search a user by ID
+exports.getUsersById=(req,res)=>{
+    const id=req.params.id;
+    connection.query('SELECT * FROM userdata WHERE id=?',[id],(err,rows,fields)=>{
+        if(err) throw err;
+        if(rows.length>0)
+            res.json(rows);
+        else
+            res.status(404).json({message: 'User not found'});
+    });
+};
 
-//DELETE
-function deleteMember(id) {
-    if (confirm("Are you sure you want to delete this employee?")) {
-        fetch("https://bscsno3-employees.onrender.com/api/users", {
-            method: 'DELETE',
-            body: JSON.stringify({ id }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then(response => response.text())
-        .then(response => {
-            console.log(response);
-            location.reload();
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    } else {
-        alert("You Canceled!");
+//Create a new user
+//CRUD - Create
+exports.createUser=(req,res)=>{
+    const {fname,lname,email,gender,ip_add} = req.body;
+    connection.query('INSERT INTO userdata (first_name, last_name, email, gender, ip_address) VALUES (?,?,?,?,?)',
+      [fname,lname,email,gender,ip],(err,result)=>{
+        if(err) throw err;
+            res.json({message: 'User Created Succesfully', userId:result.insertId});
+    });
+};
+
+// Update a user
+// CRUD - Update
+exports.updateUser = (req, res) => {
+  const {fname,lname,email,gender,ip_add,id } = req.body;
+  connection.query("UPDATE userdata SET first_name=?, last_name=?, email=?, gender=?, ip_address WHERE id=?",
+    [fname,lname,email,gender,ip_add,id],
+    (err, result) => {
+      if (err) throw err;
+      if (result.affectedRows > 0) {
+        res.json({ message: "User Updated Successfully" });
+      } else {
+        res.status(404).json({ message: "User Not Found" });
+      }
     }
-}
+  );
+};
 
-
-//search
-function updateMember(id){
-    fetch(`https://bscsno3-employees.onrender.com/api/users/${id}`)
-    .then(response=> response.json())
-    .then(data=>{
-        document.querySelector("#fname").value=data[0].first_name;
-        document.querySelector("#lname").value=data[0].last_name;
-        document.querySelector("#email").value=data[0].email;
-        document.querySelector("#gender").value=data[0].gender;
-        document.querySelector("#ID").value=data[0].id;
-    }).catch(error=>{
-        console.log(error);
-    })
-}
-
-//PUT
-update.addEventListener('click',()=>{
-    let fname=document.querySelector("#fname").value;
-    let lname=document.querySelector("#lname").value;
-    let email=document.querySelector("#email").value;
-    let gender=document.querySelector("#gender").value;
-
-    let id=document.querySelector("#ID").value;
-
-    let formData={fname,lname,email,gender,id};
-    fetch(`https://bscsno3-employees.onrender.com/api/users/`,{
-        method:'PUT',
-        body: JSON.stringify(formData),
-        headers:{
-            "Content-Type":"application/json",
-        },
-    }).catch((error)=>{
-        console.log(error);
-    })
-    alert("User Updated Successfully");
-    location.reload();
-
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Delete a user
+//CRUD - Delete
+exports.deleteUser = (req,res) => {
+  const id = req.body.id;
+  connection.query("DELETE FROM userdata WHERE id=?",[id],(err, result) => {
+    if (err) throw err;
+    if (result.affectedRows > 0) {
+      res.json({ message: "User Deleted Successfully" });
+    } else {
+      res.status(404).json({ message: "User Not Found" });
+    }
+  });
+};
